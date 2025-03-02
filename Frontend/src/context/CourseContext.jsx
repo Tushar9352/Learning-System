@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { server } from "../main";
+import PropTypes from 'prop-types';
 
 const CourseContext = createContext();
 
@@ -60,6 +61,10 @@ export const CourseContextProvider = ({ children }) => {
       {children}
     </CourseContext.Provider>
   );
+};
+
+CourseContextProvider.propTypes = {
+  children: PropTypes.node.isRequired
 };
 
 export const CourseData = () => useContext(CourseContext);

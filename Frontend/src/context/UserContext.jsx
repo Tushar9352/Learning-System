@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { server } from "../main";
 import toast, { Toaster } from "react-hot-toast";
+import PropTypes from 'prop-types';
 
 const UserContext = createContext();
 
@@ -110,6 +111,10 @@ export const UserContextProvider = ({ children }) => {
       <Toaster />
     </UserContext.Provider>
   );
+};
+
+UserContextProvider.propTypes = {
+  children: PropTypes.node.isRequired
 };
 
 export const UserData = () => useContext(UserContext);
