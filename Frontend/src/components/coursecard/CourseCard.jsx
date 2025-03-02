@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
 import "./courseCard.css";
 import { server } from "../../main";
@@ -6,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { CourseData } from "../../context/CourseContext";
+import PropTypes from 'prop-types';
 
 const CourseCard = ({ course }) => {
   const navigate = useNavigate();
@@ -84,6 +86,17 @@ const CourseCard = ({ course }) => {
       )}
     </div>
   );
+};
+
+CourseCard.propTypes = {
+  course: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    createdBy: PropTypes.string.isRequired,
+    duration: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired
+  }).isRequired
 };
 
 export default CourseCard;
