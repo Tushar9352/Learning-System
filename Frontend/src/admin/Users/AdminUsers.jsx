@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import "./users.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -8,10 +9,13 @@ import toast from "react-hot-toast";
 
 const AdminUsers = ({ user }) => {
   const navigate = useNavigate();
-
-  if (user && user.mainrole !== "superadmin") return navigate("/");
-
   const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    if (user && user.mainrole !== "superadmin") {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   async function fetchUsers() {
     try {
@@ -70,7 +74,7 @@ const AdminUsers = ({ user }) => {
 
           {users &&
             users.map((e, i) => (
-              <tbody>
+              <tbody key={e._id}>
                 <tr>
                   <td>{i + 1}</td>
                   <td>{e.name}</td>
@@ -91,6 +95,11 @@ const AdminUsers = ({ user }) => {
       </div>
     </Layout>
   );
+};
+AdminUsers.propTypes = {
+  user: PropTypes.shape({
+    mainrole: PropTypes.string.isRequired,
+  }),
 };
 
 export default AdminUsers;
