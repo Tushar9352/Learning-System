@@ -1,16 +1,15 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../Utils/Layout";
 import axios from "axios";
 import { server } from "../../main";
+import PropTypes from 'prop-types';
 import "./dashboard.css";
 
 const AdminDashbord = ({ user }) => {
-  const navigate = useNavigate();
-
-  if (user && user.role !== "admin") return navigate("/");
-
   const [stats, setStats] = useState([]);
+  const navigate = useNavigate();
 
   async function fetchStats() {
     try {
@@ -19,7 +18,6 @@ const AdminDashbord = ({ user }) => {
           token: localStorage.getItem("token"),
         },
       });
-
       setStats(data.stats);
     } catch (error) {
       console.log(error);
@@ -29,6 +27,9 @@ const AdminDashbord = ({ user }) => {
   useEffect(() => {
     fetchStats();
   }, []);
+
+  if (user && user.role !== "admin") return navigate("/");
+
   return (
     <div>
       <Layout>
@@ -49,6 +50,12 @@ const AdminDashbord = ({ user }) => {
       </Layout>
     </div>
   );
+};
+
+AdminDashbord.propTypes = {
+  user: PropTypes.shape({
+    role: PropTypes.string
+  }).isRequired
 };
 
 export default AdminDashbord;
